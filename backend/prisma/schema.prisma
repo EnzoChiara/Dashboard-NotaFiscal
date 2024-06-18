@@ -1,0 +1,28 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model NotaFiscal {
+  id                Int       @id @default(autoincrement())
+  nomePagador       String
+  numeroIdentificacao String   @unique
+  dataEmissao       DateTime
+  dataCobranca      DateTime?
+  dataPagamento     DateTime?
+  valor             Float
+  documentoNota     String
+  documentoBoleto   String
+  status            StatusNota
+}
+
+enum StatusNota {
+  EMITIDA
+  COBRANCA_REALIZADA
+  PAGAMENTO_EM_ATRASO
+  PAGAMENTO_REALIZADO
+}
